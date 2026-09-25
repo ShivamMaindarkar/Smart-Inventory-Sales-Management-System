@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if product else 'Add' }} Product{% endblock %}
+{% block content %}
+<div class="page-head"><div><p class="eyebrow">INVENTORY</p><h1>{{ 'Edit product' if product else 'Add product' }}</h1><p class="muted">Enter accurate details so stock calculations stay reliable.</p></div></div>
+<div class="card form-card">
+<form method="post" class="form grid-form">
+<label>SKU<input name="sku" value="{{ product.sku if product else '' }}" placeholder="SKU-1001" required></label>
+<label>Product name<input name="name" value="{{ product.name if product else '' }}" placeholder="Wireless Mouse" required></label>
+<label>Category<input name="category" value="{{ product.category if product else '' }}" placeholder="Accessories" required></label>
+<label>Price (₹)<input type="number" step="0.01" min="0" name="price" value="{{ product.price if product else '' }}" required></label>
+<label>Current stock<input type="number" min="0" name="stock" value="{{ product.stock if product else 0 }}" required></label>
+<label>Reorder level<input type="number" min="0" name="reorder_level" value="{{ product.reorder_level if product else 5 }}" required></label>
+<label class="wide">Supplier<input name="supplier" value="{{ product.supplier if product else '' }}" placeholder="Supplier / vendor name"></label>
+<div class="wide form-actions"><a class="btn secondary" href="{{ url_for('products') }}">Cancel</a><button class="btn primary">{{ 'Save changes' if product else 'Add product' }}</button></div>
+</form></div>
+{% endblock %}
