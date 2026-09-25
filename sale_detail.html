@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ sale.invoice_no }}{% endblock %}
+{% block content %}
+<div class="page-head"><div><p class="eyebrow">INVOICE</p><h1>{{ sale.invoice_no }}</h1><p class="muted">{{ sale.created_at.strftime('%d %B %Y, %I:%M %p') }}</p></div><button class="btn secondary" onclick="window.print()">Print</button></div>
+<div class="card invoice">
+<div class="invoice-meta"><div><span>Customer</span><strong>{{ sale.customer_name }}</strong></div><div><span>Invoice</span><strong>{{ sale.invoice_no }}</strong></div></div>
+<div class="table-wrap"><table><thead><tr><th>Product</th><th>SKU</th><th>Qty</th><th>Unit price</th><th>Line total</th></tr></thead>
+<tbody>{% for item in sale.items %}<tr><td>{{ item.product.name }}</td><td>{{ item.product.sku }}</td><td>{{ item.quantity }}</td><td>{{ item.unit_price|money }}</td><td>{{ (item.unit_price * item.quantity)|money }}</td></tr>{% endfor %}</tbody>
+<tfoot><tr><th colspan="4">Grand Total</th><th>{{ sale.total|money }}</th></tr></tfoot></table></div></div>
+{% endblock %}

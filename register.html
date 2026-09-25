@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Create account{% endblock %}
+{% block content %}
+<div class="auth-shell">
+  <div class="auth-card">
+    <div class="brand large"><span>SP</span> StockPilot</div>
+    <h1>Create your workspace</h1>
+    <p class="muted">Start managing products and sales in minutes.</p>
+    <form method="post" class="form">
+      <label>Full name<input name="name" required></label>
+      <label>Email<input type="email" name="email" required></label>
+      <label>Password<input type="password" name="password" minlength="6" required></label>
+      <button class="btn primary full">Create account</button>
+    </form>
+    <p class="switch">Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+  </div>
+</div>
+{% endblock %}

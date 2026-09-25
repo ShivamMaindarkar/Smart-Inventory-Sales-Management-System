@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><p class="eyebrow">OVERVIEW</p><h1>Good to see you, {{ current_user.name.split()[0] }}.</h1><p class="muted">Here is what is happening with your inventory.</p></div>
+  <a class="btn primary" href="{{ url_for('new_sale') }}">+ New Sale</a>
+</div>
+<div class="stats">
+  <div class="stat"><span>Total Products</span><strong>{{ total_products }}</strong><small>Items in catalog</small></div>
+  <div class="stat"><span>Low Stock</span><strong>{{ low_stock }}</strong><small>Need attention</small></div>
+  <div class="stat"><span>Total Sales</span><strong>{{ total_sales|money }}</strong><small>All recorded sales</small></div>
+  <div class="stat"><span>Today's Sales</span><strong>{{ sales_today|money }}</strong><small>{{ today.strftime('%d %b %Y') }}</small></div>
+</div>
+<div class="grid-2">
+  <section class="card">
+    <div class="card-head"><h2>Recent sales</h2><a href="{{ url_for('sales') }}">View all</a></div>
+    {% if recent_sales %}
+    <div class="table-wrap"><table><thead><tr><th>Invoice</th><th>Customer</th><th>Date</th><th>Total</th></tr></thead>
+    <tbody>{% for sale in recent_sales %}<tr><td><a href="{{ url_for('sale_detail', sale_id=sale.id) }}">{{ sale.invoice_no }}</a></td><td>{{ sale.customer_name }}</td><td>{{ sale.created_at.strftime('%d %b, %H:%M') }}</td><td>{{ sale.total|money }}</td></tr>{% endfor %}</tbody></table></div>
+    {% else %}<div class="empty">No sales recorded yet.</div>{% endif %}
+  </section>
+  <section class="card">
+    <div class="card-head"><h2>Catalog by category</h2><a href="{{ url_for('products') }}">Manage</a></div>
+    {% if categories %}
+      {% for category, count in categories %}
+      <div class="category-row"><span>{{ category }}</span><strong>{{ count }}</strong></div>
+      {% endfor %}
+    {% else %}<div class="empty">Add your first product to see categories.</div>{% endif %}
+  </section>
+</div>
+{% endblock %}
